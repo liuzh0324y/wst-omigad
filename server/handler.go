@@ -4,7 +4,9 @@ import (
 	"log"
 	"net/url"
 
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
+	"github.com/wst-libs/wst/logs"
 )
 
 func PutFileHandler(ctx *context.Context) []byte {
@@ -27,6 +29,21 @@ func GetFileHandler(ctx *context.Context) []byte {
 	m, _ := url.ParseQuery(u.RawQuery)
 	log.Println(m)
 
+	aliyun, err := NewAliyunObject(beego.AppConfig.String("endpoint"), beego.AppConfig.String("accesskey"), beego.AppConfig.String("secretkey"), beego.AppConfig.String("bucket"))
+	if err != nil {
+		logs.Error("PostFileWithUrl error: ", err.Error())
+		return []byte{}
+	}
+
+	isExist, err := aliyun.IsFileExist("filename")
+	if err != nil {
+		logs.Error("PostFileWithUrl Error: ", err.Error())
+	}
+	if isExist != true {
+
+	}
+	returl, err := aliyun.GetFileWithURL("filename", 3600)
+	log.Println("url: ", returl)
 	return GetFileResponse()
 }
 
