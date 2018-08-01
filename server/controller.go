@@ -1,29 +1,35 @@
 package server
 
 import (
-	"log"
-
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
 )
 
 type Controller struct {
 	beego.Controller
 }
 
+func SetOutPutHeaders(ctx *context.Context) {
+	ctx.Output.Header("Connection", "close")
+	ctx.Output.Header("Content-Type", "application/json")
+	ctx.Output.Header("Server", "omigad:V1.0")
+}
 func (t *Controller) PutFile() {
-	log.Printf("params: %v\n", t.Ctx.Input.Params())
-	log.Println("=========================")
-	t.Ctx.WriteString("omigad")
+	SetOutPutHeaders(t.Ctx)
+	t.Ctx.Output.Body(PutFileHandler(t.Ctx))
 }
 
 func (t *Controller) GetFile() {
-	t.Ctx.WriteString("GetFile")
+	SetOutPutHeaders(t.Ctx)
+	t.Ctx.Output.Body(GetFileHandler(t.Ctx))
 }
 
 func (t *Controller) UpdateFile() {
-	t.Ctx.WriteString("UpdateFile")
+	SetOutPutHeaders(t.Ctx)
+	t.Ctx.Output.Body(UpdateFileHandler(t.Ctx))
 }
 
 func (t *Controller) DeleteFile() {
-	t.Ctx.WriteString("DeleteFile")
+	SetOutPutHeaders(t.Ctx)
+	t.Ctx.Output.Body(DeleteFileHandler(t.Ctx))
 }
