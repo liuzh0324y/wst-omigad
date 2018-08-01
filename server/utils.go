@@ -19,25 +19,24 @@ type ReqPutFile struct {
 // PutFile response structure
 type ResPutFile struct {
 	utils.ResponseCommon
-	Data struct {
-		Id string `json:"id"`
-	}
+	utils.ID `json:"data"`
 }
 
 // GetFile response structure
+type GetFileData struct {
+	Id     string `json:"id"`
+	Name   string `json:"name"`
+	Type   string `json:"type"`
+	Path   string `json:"path"`
+	Url    string `json:"url"`
+	Size   string `json:"size"`
+	Bucket string `json:"bucket"`
+	Object string `json:"object"`
+	Desc   string `json:"description"`
+}
 type ResGetFile struct {
 	utils.ResponseCommon
-	Data struct {
-		Id     string `json:"id"`
-		Name   string `json:"name"`
-		Type   string `json:"type"`
-		Path   string `json:"path"`
-		Url    string `json:"url"`
-		Size   string `json:"size"`
-		Bucket string `json:"bucket"`
-		Object string `json:"object"`
-		Desc   string `json:"description"`
-	}
+	GetFileData `json:"data"`
 }
 
 // UpdateFile request structure
@@ -58,7 +57,6 @@ type ResDeleteFile struct {
 }
 
 type ReqDeleteFileList struct {
-
 }
 
 type ResDeleteFileList struct {
