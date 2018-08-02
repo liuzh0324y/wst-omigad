@@ -62,3 +62,14 @@ type ReqDeleteFileList struct {
 type ResDeleteFileList struct {
 	utils.ResponseCommon
 }
+
+type FileInfo struct {
+	FilePath string
+	FileName string
+	FileType string
+	Channel  string
+	SeqNum   int64
+	TmpPath  string
+	Bucket   string
+	Object   string
+}

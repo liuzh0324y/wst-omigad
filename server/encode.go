@@ -7,41 +7,51 @@ import (
 )
 
 func PutFileResponse() []byte {
-	s := ResPutFile{
-		utils.ResponseCommon{
-			Version: utils.Version,
-			SeqNum:  1,
-			From:    "",
-			To:      "",
-			Type:    "",
-			Number:  "",
-			Uid:     "",
-		},
-		utils.ID{
-			Id: "",
-		},
+	s := utils.ResponseCommon{
+		Version: utils.Version,
+		SeqNum:  1,
+		From:    "omigad",
+		To:      "client",
+		Type:    "omigad",
+		Number:  "XXXX-XXXX-XXXX-XXXX",
+		Message: "success",
+		Code:    0,
 	}
+	//  ResPutFile{
+	// 	utils.ResponseCommon{
+	// 		Version: utils.Version,
+	// 		SeqNum:  1,
+	// 		From:    "imigad",
+	// 		To:      "client",
+	// 		Type:    "imigad",
+	// 		Number:  "XXXX-XXXX-XXXX-XXXX",
+	// 		Message: "success",
+	// 		Code:    0,
+	// 	},
+	// 	utils.ID{
+	// 		Id: "",
+	// 	},
+	// }
 	out, _ := json.Marshal(s)
 	return out
 }
 
-func GetFileResponse() []byte {
+func GetFileResponse(url string) []byte {
 	s := ResGetFile{
 		utils.ResponseCommon{
 			Version: utils.Version,
 			SeqNum:  1,
-			From:    "",
-			To:      "",
-			Type:    "",
-			Number:  "",
-			Uid:     "",
+			From:    "omigad",
+			To:      "client",
+			Type:    "omigad",
+			Number:  "XXXX-XXXX-XXXX-XXXX",
 		},
 		GetFileData{
 			Id:     "",
 			Name:   "",
 			Type:   "",
 			Path:   "",
-			Url:    "",
+			Url:    url,
 			Size:   "",
 			Bucket: "",
 			Object: "",
@@ -57,11 +67,10 @@ func UpdateFileResponse() []byte {
 		utils.ResponseCommon{
 			Version: utils.Version,
 			SeqNum:  1,
-			From:    "",
-			To:      "",
-			Type:    "",
-			Number:  "",
-			Uid:     "",
+			From:    "omigad",
+			To:      "client",
+			Type:    "omigad",
+			Number:  "XXXX-XXXX-XXXX-XXXX",
 		},
 	}
 	out, _ := json.Marshal(s)
@@ -69,16 +78,15 @@ func UpdateFileResponse() []byte {
 }
 
 func DeleteFileResponse() []byte {
-	s := ResDeleteFile{
-		utils.ResponseCommon{
-			Version: utils.Version,
-			SeqNum:  1,
-			From:    "",
-			To:      "",
-			Type:    "",
-			Number:  "",
-			Uid:     "",
-		},
+	s := utils.ResponseCommon{
+		Version: utils.Version,
+		SeqNum:  1,
+		From:    "omigad",
+		To:      "client",
+		Type:    "omigad",
+		Number:  "XXXX-XXXX-XXXX-XXXX",
+		Message: "success",
+		Code:    0,
 	}
 	out, _ := json.Marshal(s)
 	return out
