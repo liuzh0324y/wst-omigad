@@ -9,6 +9,7 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
+	"github.com/wst-libs/wst-sdk/utils"
 )
 
 var FileChan chan FileInfo = make(chan FileInfo, 1024)
@@ -53,9 +54,31 @@ func UploadChan() {
 			continue
 		}
 
-		res := ResUpdateFileToP{}
+		res := ResUpdateFileToP{
+			utils.RequestCommon{
+				Version: utils.Version,
+				SeqNum:  1,
+				From:    "omigad",
+				To:      "file manager",
+				Type:    "omigad",
+				Number:  "XXXX-XXXX-XXXX-XXXX",
+				Uid:     f.Id,
+			},
+			PostInfo{
+				Name:     f.FileName,
+				Type:     f.FileType,
+				Url:      "https://sample.com/sample.mp4",
+				Key:      "",
+				Secret:   "",
+				Bucket:   f.Bucket,
+				Object:   f.Object,
+				Region:   "",
+				Endpoint: beego.AppConfig.String("endpoint"),
+				Desc:     "",
+			},
+		}
 		out, _ := json.Marshal(res)
-		posturl := beego.AppConfig.String("puthost") + "/" + beego.AppConfig.String("putport") + "/" + beego.AppConfig.String("putpath") + "/" + f.Id
+		posturl := "http://" + beego.AppConfig.String("puthost") + "/" + beego.AppConfig.String("putport") + "/" + beego.AppConfig.String("putpath") + "/" + f.Id
 		resp, err := http.Post(posturl, "application/json", strings.NewReader(string(out)))
 		if err != nil {
 			logs.Error(err.Error())

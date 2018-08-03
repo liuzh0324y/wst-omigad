@@ -64,20 +64,22 @@ type ResDeleteFileList struct {
 	utils.ResponseCommon
 }
 
+type PostInfo struct {
+	Name     string `json:"name"`
+	Type     string `json:"type"`
+	Url      string `json:"url"`
+	Key      string `json:"key"`
+	Secret   string `json:"secret"`
+	Bucket   string `json:"bucket"`
+	Object   string `json:"object"`
+	Region   string `json:"region"`
+	Endpoint string `json:"endpoint"`
+	Desc     string `json:"description"`
+}
+
 type ResUpdateFileToP struct {
 	utils.RequestCommon
-	Data struct {
-		Name     string `json:"name"`
-		Type     string `json:"type"`
-		Url      string `json:"url"`
-		Key      string `json:"key"`
-		Secret   string `json:"secret"`
-		Bucket   string `json:"bucket"`
-		Object   string `json:"object"`
-		Region   string `json:"region"`
-		Endpoint string `json:"endpoint"`
-		Desc     string `json:"description"`
-	} `json:"data"`
+	PostInfo `json:"data"`
 }
 
 type FileInfo struct {
