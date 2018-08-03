@@ -1,8 +1,11 @@
 package server
 
 import (
+	"encoding/json"
 	"log"
+	"net/http"
 	"os"
+	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
@@ -49,5 +52,14 @@ func UploadChan() {
 			logs.Error(err.Error())
 			continue
 		}
+
+		res := ResUpdateFileToP{}
+		out, _ := json.Marshal(res)
+		posturl := beego.AppConfig.String("puthost") + "/" + beego.AppConfig.String("putport") + "/" + beego.AppConfig.String("putpath") + "/" + f.Id
+		resp, err := http.Post(posturl, "application/json", strings.NewReader(string(out)))
+		if err != nil {
+			logs.Error(err.Error())
+		}
+		defer resp.Body.Close()
 	}
 }

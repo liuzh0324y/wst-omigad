@@ -14,6 +14,7 @@ func PutFileHandler(ctx *context.Context) []byte {
 		return JsonFormatErr()
 	}
 	info := FileInfo{
+		Id:       s.Data.Id,
 		FilePath: s.Data.Path,
 		FileName: s.Data.Name,
 		FileType: s.Data.Type,

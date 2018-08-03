@@ -5,6 +5,7 @@ import "github.com/wst-libs/wst-sdk/utils"
 // PutFile request structure
 type ReqPutFile struct {
 	Data struct {
+		Id     string `json:"id"`
 		Name   string `json:"name"`
 		Type   string `json:"type"`
 		Path   string `json:"path"`
@@ -63,7 +64,24 @@ type ResDeleteFileList struct {
 	utils.ResponseCommon
 }
 
+type ResUpdateFileToP struct {
+	utils.RequestCommon
+	Data struct {
+		Name     string `json:"name"`
+		Type     string `json:"type"`
+		Url      string `json:"url"`
+		Key      string `json:"key"`
+		Secret   string `json:"secret"`
+		Bucket   string `json:"bucket"`
+		Object   string `json:"object"`
+		Region   string `json:"region"`
+		Endpoint string `json:"endpoint"`
+		Desc     string `json:"description"`
+	} `json:"data"`
+}
+
 type FileInfo struct {
+	Id       string
 	FilePath string
 	FileName string
 	FileType string
