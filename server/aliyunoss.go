@@ -47,7 +47,10 @@ func (this AliyunOss) IsFileExist(name string) (bool, error) {
 
 // Upload local file to the OSS server
 func (this AliyunOss) PutFile(name, file string) error {
-	return this.bucket.PutObjectFromFile(name, file)
+	options := []oss.Option{
+		oss.Meta("callbackUrl", "http://120.79.25.118:18012/api/v1/cloudstorage/callback"),
+	}
+	return this.bucket.PutObjectFromFile(name, file, options...)
 }
 
 // Create the URL that want to upload file to the OSS server

@@ -33,3 +33,8 @@ func (t *Controller) DeleteFile() {
 	SetOutPutHeaders(t.Ctx)
 	t.Ctx.Output.Body(DeleteFileHandler(t.Ctx))
 }
+
+func (t *Controller) CallBack() {
+	SetOutPutHeaders(t.Ctx)
+	t.Ctx.Output.Body(CallBackHandler(t.Ctx))
+}
