@@ -47,11 +47,14 @@ func UploadChan() {
 			logs.Error(err.Error())
 			continue
 		}
-		err = os.Remove(filepath)
+		isDel, _ := beego.AppConfig.Bool("remove")
+		if isDel == true {
+			err = os.Remove(filepath)
 
-		if err != nil {
-			logs.Error(err.Error())
-			continue
+			if err != nil {
+				logs.Error(err.Error())
+				continue
+			}
 		}
 
 		res := ResUpdateFileToP{
@@ -78,11 +81,13 @@ func UploadChan() {
 			},
 		}
 		out, _ := json.Marshal(res)
-		posturl := "http://" + beego.AppConfig.String("puthost") + "/" + beego.AppConfig.String("putport") + "/" + beego.AppConfig.String("putpath") + "/" + f.Id
+		posturl := "http://" + beego.AppConfig.String("puthost") + ":" + beego.AppConfig.String("putport") + beego.AppConfig.String("putpath") + "/" + f.Id
+
 		resp, err := http.Post(posturl, "application/json", strings.NewReader(string(out)))
 		if err != nil {
-			logs.Error(err.Error())
+			log.Println("Upload file error: ", err.Error())
+		} else {
+			resp.Body.Close()
 		}
-		defer resp.Body.Close()
 	}
 }
