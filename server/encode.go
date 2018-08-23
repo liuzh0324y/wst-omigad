@@ -91,3 +91,23 @@ func DeleteFileResponse() []byte {
 	out, _ := json.Marshal(s)
 	return out
 }
+
+func GetUrlForFileResponse(url string) []byte {
+	s := ResGetUrlForFile{
+		utils.ResponseCommon{
+			Version: utils.Version,
+			SeqNum:  1,
+			From:    "omigad",
+			To:      "client",
+			Type:    "omigad",
+			Number:  "success",
+			Code:    0,
+		},
+		utils.Url{
+			Url: url,
+		},
+	}
+
+	out, _ := json.Marshal(s)
+	return out
+}

@@ -38,3 +38,8 @@ func (t *Controller) CallBack() {
 	SetOutPutHeaders(t.Ctx)
 	t.Ctx.Output.Body(CallBackHandler(t.Ctx))
 }
+
+func (t *Controller) GetUrlForFile() {
+	SetOutPutHeaders(t.Ctx)
+	t.Ctx.Output.Body(GetUrlForFileHandler(t.Ctx))
+}

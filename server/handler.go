@@ -137,3 +137,38 @@ func DeleteFileHandler(ctx *context.Context) []byte {
 
 	return DeleteFileResponse()
 }
+
+func GetUrlForFileHandler(ctx *context.Context) []byte {
+	u, err := url.Parse(ctx.Input.URI())
+	if err != nil {
+		log.Println("Error: ", err.Error())
+	}
+	log.Println("raw query: ", u.RawQuery)
+	m, _ := url.ParseQuery(u.RawQuery)
+	log.Println(m)
+	bucket := m.Get("bucket")
+	object := m.Get("object")
+
+	obj, err := NewAliyunObject(beego.AppConfig.String("endpoint"), beego.AppConfig.String("accesskey"), beego.AppConfig.String("secretkey"), bucket)
+	if err != nil {
+		log.Println("GetUrlFromFileHandler")
+		return BucketNotFound()
+	}
+
+	isExist, err := obj.IsFileExist(object)
+	if err != nil {
+		log.Println("GetUrlForFileHandler error: ", err.Error())
+		return InternalError()
+	}
+	if isExist != false {
+		log.Println("file not exist")
+		return FileAlreadyExist()
+	}
+
+	url, err := obj.PutFileWithURL(object)
+	if err != nil {
+		log.Println("GetUrlForFileHandler error: ", err.Error())
+	}
+
+	return GetUrlForFileResponse(url)
+}

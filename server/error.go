@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	NotFound    = 404
-	InternalErr = 503
+	NotFound     = 404
+	InternalErr  = 503
+	AlreadyExist = 504
 )
 
 func JsonFormatErr() []byte {
@@ -81,6 +82,23 @@ func FileNotFound() []byte {
 		Number:  "XXXX-XXXX-XXXX-XXXX",
 		Message: "File not found",
 		Code:    NotFound,
+	}
+
+	out, _ := json.Marshal(s)
+	return out
+}
+
+// File already exist
+func FileAlreadyExist() []byte {
+	s := utils.ResponseCommon{
+		Version: utils.Version,
+		SeqNum:  1,
+		From:    "omigad",
+		To:      "client",
+		Type:    "omigad",
+		Number:  "XXXX-XXXX-XXXX-XXXX",
+		Message: "File already exist",
+		Code:    AlreadyExist,
 	}
 
 	out, _ := json.Marshal(s)

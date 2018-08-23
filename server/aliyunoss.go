@@ -54,12 +54,13 @@ func (this AliyunOss) PutFile(name, file string) error {
 }
 
 // Create the URL that want to upload file to the OSS server
-func (this AliyunOss) PutFileWithURL(filename string) string {
+func (this AliyunOss) PutFileWithURL(filename string) (string, error) {
 	signedURL, err := this.bucket.SignURL(filename, oss.HTTPPut, 60*60)
 	if err != nil {
 		logs.Error(err.Error())
+		return "", err
 	}
-	return signedURL
+	return signedURL, nil
 }
 
 // Get the file from OSS server, and save local disk
