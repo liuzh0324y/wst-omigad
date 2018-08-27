@@ -82,9 +82,14 @@ type ResUpdateFileToP struct {
 	PostInfo `json:"data"`
 }
 
+type PutFileInfo struct {
+	Id  string `json:"id"`
+	Url string `json:"url"`
+}
+
 type ResGetUrlForFile struct {
 	utils.ResponseCommon
-	utils.Url `json:"data"`
+	PutFileInfo `json:"data"`
 }
 
 type FileInfo struct {

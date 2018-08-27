@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/url"
 
+	"github.com/wst-libs/wst-sdk/sdk/manager"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 )
@@ -139,6 +141,7 @@ func DeleteFileHandler(ctx *context.Context) []byte {
 }
 
 func GetUrlForFileHandler(ctx *context.Context) []byte {
+	// Parse url
 	u, err := url.Parse(ctx.Input.URI())
 	if err != nil {
 		log.Println("Error: ", err.Error())
@@ -149,12 +152,14 @@ func GetUrlForFileHandler(ctx *context.Context) []byte {
 	bucket := m.Get("bucket")
 	object := m.Get("object")
 
+	// New object for oss
 	obj, err := NewAliyunObject(beego.AppConfig.String("endpoint"), beego.AppConfig.String("accesskey"), beego.AppConfig.String("secretkey"), bucket)
 	if err != nil {
 		log.Println("GetUrlFromFileHandler")
 		return BucketNotFound()
 	}
 
+	// check is file exist
 	isExist, err := obj.IsFileExist(object)
 	if err != nil {
 		log.Println("GetUrlForFileHandler error: ", err.Error())
@@ -165,10 +170,14 @@ func GetUrlForFileHandler(ctx *context.Context) []byte {
 		return FileAlreadyExist()
 	}
 
+	// get id for manager
+	mgr := manager.NewManager()
+	res := mgr.Add(beego.AppConfig.String("managerurl"), nil)
+	log.Println("id: ", res.Id)
 	url, err := obj.PutFileWithURL(object)
 	if err != nil {
 		log.Println("GetUrlForFileHandler error: ", err.Error())
 	}
 
-	return GetUrlForFileResponse(url)
+	return GetUrlForFileResponse(res.Id, url)
 }

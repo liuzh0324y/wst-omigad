@@ -4,14 +4,17 @@ import (
 	"encoding/json"
 	"log"
 
+	"github.com/astaxie/beego"
+
 	"github.com/astaxie/beego/context"
+	"github.com/wst-libs/wst-sdk/sdk/manager"
 )
 
 type CallBack struct {
 }
 
 type ReqBody struct {
-	Code int64 `json:"code"`
+	Id string `json:"id"`
 }
 type ResSuccess struct {
 	Code int64 `json:"code"`
@@ -42,5 +45,9 @@ func CallBackHandler(ctx *context.Context) []byte {
 		log.Println("Failed to json unmarshal.")
 		return ResponseFailed()
 	}
+
+	mgr := manager.NewManager()
+	mgr.Update(beego.AppConfig.String("managerurl"))
+
 	return ResponseSuccess()
 }

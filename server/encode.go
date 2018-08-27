@@ -92,7 +92,7 @@ func DeleteFileResponse() []byte {
 	return out
 }
 
-func GetUrlForFileResponse(url string) []byte {
+func GetUrlForFileResponse(id, url string) []byte {
 	s := ResGetUrlForFile{
 		utils.ResponseCommon{
 			Version: utils.Version,
@@ -103,7 +103,8 @@ func GetUrlForFileResponse(url string) []byte {
 			Number:  "success",
 			Code:    0,
 		},
-		utils.Url{
+		PutFileInfo{
+			Id:  id,
 			Url: url,
 		},
 	}
