@@ -46,8 +46,7 @@ func CallBackHandler(ctx *context.Context) []byte {
 		return ResponseFailed()
 	}
 
-	mgr := manager.NewManager()
-	mgr.Update(beego.AppConfig.String("managerurl"))
+	manager.Update(beego.AppConfig.String("managerurl")+"/"+req.Id, 3)
 
 	return ResponseSuccess()
 }

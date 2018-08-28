@@ -10,6 +10,8 @@ const (
 	NotFound     = 404
 	InternalErr  = 503
 	AlreadyExist = 504
+	InvalidParam = 505
+	CreateErr    = 506
 )
 
 func JsonFormatErr() []byte {
@@ -101,6 +103,36 @@ func FileAlreadyExist() []byte {
 		Code:    AlreadyExist,
 	}
 
+	out, _ := json.Marshal(s)
+	return out
+}
+
+func InvalidParams() []byte {
+	s := utils.ResponseCommon{
+		Version: utils.Version,
+		SeqNum:  1,
+		From:    "omigad",
+		To:      "client",
+		Type:    "omigad",
+		Number:  "XXXX-XXXX-XXXX-XXXX",
+		Message: " Invalid params",
+		Code:    InvalidParam,
+	}
+	out, _ := json.Marshal(s)
+	return out
+}
+
+func CreateRecordFailed() []byte {
+	s := utils.ResponseCommon{
+		Version: utils.Version,
+		SeqNum:  1,
+		From:    "omigad",
+		To:      "client",
+		Type:    "omigad",
+		Number:  "XXXX-XXXX-XXXX-XXXX",
+		Message: "Failed to create record for the file manager",
+		Code:    CreateErr,
+	}
 	out, _ := json.Marshal(s)
 	return out
 }

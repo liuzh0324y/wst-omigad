@@ -140,6 +140,8 @@ func DeleteFileHandler(ctx *context.Context) []byte {
 	return DeleteFileResponse()
 }
 
+// GetUrlForFileHandler
+// uri -> :bucket, :object
 func GetUrlForFileHandler(ctx *context.Context) []byte {
 	// Parse url
 	u, err := url.Parse(ctx.Input.URI())
@@ -151,7 +153,12 @@ func GetUrlForFileHandler(ctx *context.Context) []byte {
 	log.Println(m)
 	bucket := m.Get("bucket")
 	object := m.Get("object")
-
+	if len(bucket) == 0 {
+		bucket = beego.AppConfig.String("bucket")
+	}
+	if len(object) == 0 {
+		return InvalidParams()
+	}
 	// New object for oss
 	obj, err := NewAliyunObject(beego.AppConfig.String("endpoint"), beego.AppConfig.String("accesskey"), beego.AppConfig.String("secretkey"), bucket)
 	if err != nil {
@@ -171,12 +178,14 @@ func GetUrlForFileHandler(ctx *context.Context) []byte {
 	}
 
 	// get id for manager
-	mgr := manager.NewManager()
-	res := mgr.Add(beego.AppConfig.String("managerurl"), nil)
-	log.Println("id: ", res.Id)
+	res := manager.Add(beego.AppConfig.String("managerurl"))
+	if res.Code != 0 {
+		return CreateRecordFailed()
+	}
 	url, err := obj.PutFileWithURL(object)
 	if err != nil {
 		log.Println("GetUrlForFileHandler error: ", err.Error())
+		return InternalError()
 	}
 
 	return GetUrlForFileResponse(res.Id, url)
