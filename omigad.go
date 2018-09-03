@@ -1,9 +1,7 @@
 package main
 
-import (
-	"github.com/wst-libs/wst-omigad/server"
-)
+import "github.com/wst-libs/wst-sdk/omigad"
 
 func main() {
-	server.Run()
+	omigad.Run()
 }
