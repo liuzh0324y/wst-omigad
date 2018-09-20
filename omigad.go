@@ -1,7 +1,7 @@
 package main
 
-import "github.com/wst-libs/wst-sdk/omigad"
+import "github.com/wst-libs/wst-sdk/store/public"
 
 func main() {
-	omigad.Run()
+	public.Run()
 }

@@ -15,7 +15,6 @@ LABEL maintainer="liuzh <liuzh@llvision.com>"
 # WORKDIR /go/src/github.com/wst-libs
 
 ADD ./wst-omigad /wst/wst-omigad
-ADD ./conf /wst/conf
 
 WORKDIR /wst
 
