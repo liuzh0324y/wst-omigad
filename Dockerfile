@@ -14,10 +14,10 @@ LABEL maintainer="liuzh <liuzh@llvision.com>"
 
 # WORKDIR /go/src/github.com/wst-libs
 
-ADD ./wst-omigad /wst/wst-omigad
+ADD ./wst-omg /wst/omg
 
 WORKDIR /wst
 
 EXPOSE 18012
 
-CMD ["/wst/wst-omigad"]
+CMD ["/wst/omg"]

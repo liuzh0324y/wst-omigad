@@ -1,7 +1,7 @@
 package main
 
-import "github.com/wst-libs/wst-sdk/store/public"
+import "github.com/wst-libs/wst-omg/omg"
 
 func main() {
-	public.Run()
+	omg.Run()
 }
